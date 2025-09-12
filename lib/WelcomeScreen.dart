@@ -51,7 +51,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
           ),
           SizedBox(height: 10,),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,6 +63,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
                       color: Colors.white,
                       letterSpacing: 1.8),
                   ),
+                SizedBox(height: 20,),
                 Text( 
                     "Your Journey Starts Here\nLet's Get Started\n", 
                     style: GoogleFonts.lato(
@@ -71,6 +72,14 @@ class _WelcomescreenState extends State<Welcomescreen> {
                       color: Colors.white70,
                       letterSpacing: 1.8),
                   ),
+                Container(
+                  height: 250,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                )
               ],
             ),
           ),
