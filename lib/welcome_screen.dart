@@ -137,19 +137,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         color: Colors.white70,
                         fontWeight: FontWeight.w500 
                       ) ),
-                      Container(
-                        width: 139,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 90, 188, 74),
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: Center(
-                          child: Text('Next', style: GoogleFonts.lato(
-                            fontSize: 16,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold 
-                          ) ),
+                      GestureDetector(
+                        
+                        child: Container(
+                          width: 139,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 90, 188, 74),
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Center(
+                            child: Text('Next', style: GoogleFonts.lato(
+                              fontSize: 16,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold 
+                            ) ),
+                          ),
                         ),
                       ),
                     ],
