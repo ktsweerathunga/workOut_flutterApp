@@ -9,6 +9,12 @@ class Welcomescreen extends StatefulWidget {
 }
 
 class _WelcomescreenState extends State<Welcomescreen> {
+
+  final List levels = [
+    "Inactive",
+    "Beginner"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +49,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
                   "ELEMENTS", 
                   style: GoogleFonts.bebasNeue(
                     fontSize: 32,
-                    color: Colors.green,
+                    color: const Color.fromARGB(255, 90, 188, 74),
                     letterSpacing: 1.8),
                 ),
               ),
@@ -75,10 +81,37 @@ class _WelcomescreenState extends State<Welcomescreen> {
                 Container(
                   height: 250,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: levels.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right:8.0),
+                        child: Container(
+                          height: 250,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 38, 27, 87),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("I am", style: GoogleFonts.lato(
+                                fontSize: 30,
+                                color: const Color.fromARGB(255, 90, 188, 74),
+                                fontWeight: FontWeight.bold 
+                              )),
+                              Text(levels[index], style: GoogleFonts.lato(
+                                fontSize: 30,
+                                color: const Color.fromARGB(255, 90, 188, 74),
+                                fontWeight: FontWeight.bold 
+                              )),
+                            ],
+                          ),
+                        ),
+                      );
+                  }),
                 )
               ],
             ),
