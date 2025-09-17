@@ -25,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Row(
-                  children: [],
+                  children: [
+                    Text("data"),
+                    Text("data"),
+                  ],
                 )
               ],
             )
