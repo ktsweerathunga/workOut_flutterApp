@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workout_app_androweb/home_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
 	const WelcomeScreen({super.key});
@@ -138,7 +139,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         fontWeight: FontWeight.w500 
                       ) ),
                       GestureDetector(
-                        
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        },
                         child: Container(
                           width: 139,
                           height: 50,
