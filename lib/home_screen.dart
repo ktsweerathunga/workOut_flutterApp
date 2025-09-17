@@ -54,8 +54,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Container(
-                height: 300,
-                child: Icon(Icons.play_circle_sharp , size: 80, color: Colors.white54,),
+                height: 200,
+                child: Icon(Icons.play_circle_sharp , size: 80, color: Color.fromARGB(255, 90, 188, 74),),
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Text("Next workout:", style: GoogleFonts.bebasNeue(
+                        fontSize: 25,
+                        color: Colors.white,
+                        letterSpacing: 1.8
+                      ),),
+                      Text("Legs Toning", style: GoogleFonts.bebasNeue(
+                        fontSize: 25,
+                        color: const Color.fromARGB(255, 90, 188, 74),
+                        letterSpacing: 1.8
+                      ),),
+                    ],
+                  )
+                ],
               )
             ],
           ),
