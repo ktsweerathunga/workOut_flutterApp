@@ -58,21 +58,76 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Icon(Icons.play_circle_sharp , size: 80, color: Color.fromARGB(255, 90, 188, 74),),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Text("Next workout:", style: GoogleFonts.bebasNeue(
+                      Text("Find", style: GoogleFonts.lato(
                         fontSize: 25,
                         color: Colors.white,
-                        letterSpacing: 1.8
+                        letterSpacing: 1.8,
+                        fontWeight: FontWeight.bold,
                       ),),
-                      Text("Legs Toning", style: GoogleFonts.bebasNeue(
+                      Text("Your Workout", style: GoogleFonts.lato(
                         fontSize: 25,
                         color: const Color.fromARGB(255, 90, 188, 74),
-                        letterSpacing: 1.8
+                        letterSpacing: 1.8,
+                        fontWeight: FontWeight.bold,
                       ),),
                     ],
-                  )
+                  ),
+                  Icon(
+                    Icons.filter_alt_outlined,
+                    color: const Color.fromARGB(255, 90, 188, 74),
+                    size: 40,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  height: 345,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 90, 188, 74),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.search, color: Colors.white,),
+                        hintText: "Search",
+                        hintStyle: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      style: TextStyle(color: Colors.white54, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Text("Popular", style: GoogleFonts.lato(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold 
+                  )),
+                  Text("Hard workout", style: GoogleFonts.lato(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold 
+                  )),
+                  Text("Full body", style: GoogleFonts.lato(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold 
+                  )),
+                  Text("CrossFit", style: GoogleFonts.lato(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold 
+                  )),
                 ],
               )
             ],
