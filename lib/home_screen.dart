@@ -20,6 +20,17 @@ class _HomeScreenState extends State<HomeScreen> {
             fit: BoxFit.cover,
           ),
         ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Row(
+                  children: [],
+                )
+              ],
+            )
+          ],
+        ),
       ) 
     );
   }
