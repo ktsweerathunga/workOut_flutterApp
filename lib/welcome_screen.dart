@@ -132,11 +132,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Skip Intro', style: GoogleFonts.lato(
-                        fontSize: 12,
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w500 
-                      ) ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
+                        child: Text('Skip Intro', style: GoogleFonts.lato(
+                          fontSize: 12,
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w500 
+                        )),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, '/home');

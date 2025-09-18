@@ -38,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Row(
                     children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/welcome');
+                        },
+                        icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                      ),
+                      SizedBox(width: 10),
                       Text("Hey,", style: GoogleFonts.bebasNeue(
                         fontSize: 40,
                         color: Colors.white,
