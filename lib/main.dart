@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app_androweb/welcome_screen.dart';
+import 'package:workout_app_androweb/home_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,8 +11,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-  home: WelcomeScreen(),
+      title: 'Workout App',
+      initialRoute: '/welcome',
+      routes: {
+        '/welcome': (context) => const WelcomeScreen(),
+        '/home': (context) => const HomeScreen(),
+      },
     );
   }
 }

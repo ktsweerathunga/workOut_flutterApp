@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final List<Category> catego = [
+  final List catego = [
     Category(name: "CrossFit", imageUrl: "assets/images/emily.png"),
     Category(name: "Full Body", imageUrl: "assets/images/sule.png"),
     Category(name: "Hard Workout", imageUrl: "assets/images/alexsandra.png"),
