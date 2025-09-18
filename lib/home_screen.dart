@@ -106,30 +106,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Text("Popular", style: GoogleFonts.lato(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold 
-                  )),
-                  Text("Hard workout", style: GoogleFonts.lato(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold 
-                  )),
-                  Text("Full body", style: GoogleFonts.lato(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold 
-                  )),
-                  Text("CrossFit", style: GoogleFonts.lato(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold 
-                  )),
-                ],
-              )
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Popular", style: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold 
+                    )),
+                    Text("Hard workout", style: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold 
+                    )),
+                    Text("Full body", style: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold 
+                    )),
+                    Text("CrossFit", style: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold 
+                    )),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Row(
+                  children: [
+                    Text("Popular workouts", style: GoogleFonts.lato(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold 
+                    )),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
