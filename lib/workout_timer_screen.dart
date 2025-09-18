@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workout_app_androweb/data_service.dart';
 
 class WorkoutTimerScreen extends StatefulWidget {
   const WorkoutTimerScreen({super.key});
@@ -13,6 +14,25 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   int _seconds = 30; // Default 30 seconds for exercise
   Timer? _timer;
   bool _isRunning = false;
+  final DataService _dataService = DataService();
+
+  // Workout session data
+  String _currentWorkoutName = "Custom Workout";
+  int _totalExercises = 1;
+  int _sessionDuration = 0; // Track total session time
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Get arguments passed from previous screen
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    if (args != null) {
+      setState(() {
+        _currentWorkoutName = args['workoutName'] ?? "Custom Workout";
+        _totalExercises = args['exerciseCount'] ?? 1;
+      });
+    }
+  }
 
   void _startTimer() {
     if (_timer != null) {
@@ -25,10 +45,11 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
       setState(() {
         if (_seconds > 0) {
           _seconds--;
+          _sessionDuration++;
         } else {
           _timer!.cancel();
           _isRunning = false;
-          // Play sound or vibrate when timer ends
+          _completeWorkout();
         }
       });
     });
@@ -46,6 +67,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     setState(() {
       _seconds = 30;
       _isRunning = false;
+      _sessionDuration = 0;
     });
   }
 
@@ -53,6 +75,73 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     setState(() {
       _seconds += seconds;
     });
+  }
+
+  Future<void> _completeWorkout() async {
+    // Save the completed workout
+    await _dataService.saveCompletedWorkout(
+      _currentWorkoutName,
+      _sessionDuration ~/ 60, // Convert seconds to minutes
+      _totalExercises,
+    );
+
+    // Show completion dialog
+    _showCompletionDialog();
+  }
+
+  void _showCompletionDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 38, 27, 87),
+          title: Text(
+            "Workout Complete! 🎉",
+            style: GoogleFonts.bebasNeue(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+          content: Text(
+            "Great job! Your workout has been saved to your progress.",
+            style: GoogleFonts.lato(
+              color: Colors.white70,
+              fontSize: 16,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed('/progress');
+              },
+              child: Text(
+                "View Progress",
+                style: GoogleFonts.lato(
+                  color: Color.fromARGB(255, 90, 188, 74),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed('/home');
+              },
+              child: Text(
+                "Home",
+                style: GoogleFonts.lato(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String _formatTime(int seconds) {

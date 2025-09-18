@@ -239,7 +239,14 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/timer');
+                  Navigator.pushNamed(
+                    context,
+                    '/timer',
+                    arguments: {
+                      'workoutName': widget.category.name,
+                      'exerciseCount': exercises.length,
+                    },
+                  );
                 },
                 child: Container(
                   width: double.infinity,

@@ -5,8 +5,13 @@ import 'package:workout_app_androweb/workout_detail_screen.dart';
 import 'package:workout_app_androweb/workout_timer_screen.dart';
 import 'package:workout_app_androweb/progress_screen.dart';
 import 'package:workout_app_androweb/modes.dart';
+import 'package:workout_app_androweb/data_service.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DataService().init();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
