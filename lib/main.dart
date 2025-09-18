@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:workout_app_androweb/welcome_screen.dart';
 import 'package:workout_app_androweb/home_screen.dart';
 import 'package:workout_app_androweb/workout_detail_screen.dart';
+import 'package:workout_app_androweb/workout_timer_screen.dart';
+import 'package:workout_app_androweb/progress_screen.dart';
 import 'package:workout_app_androweb/modes.dart';
 
 void main() => runApp(const MyApp());
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
         '/home': (context) => const HomeScreen(),
+        '/timer': (context) => const WorkoutTimerScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/workout-detail') {
