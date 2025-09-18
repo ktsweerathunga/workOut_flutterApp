@@ -11,11 +11,36 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final List catego = [
+  final List<Category> catego = [
     Category(name: "CrossFit", imageUrl: "assets/images/emily.png"),
     Category(name: "Full Body", imageUrl: "assets/images/sule.png"),
     Category(name: "Hard Workout", imageUrl: "assets/images/alexsandra.png"),
   ];
+
+  final TextEditingController _searchController = TextEditingController();
+  List<Category> _filteredCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredCategories = catego;
+    _searchController.addListener(_filterCategories);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterCategories() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredCategories = catego.where((category) {
+        return category.name.toLowerCase().contains(query);
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
