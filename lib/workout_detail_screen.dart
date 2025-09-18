@@ -113,6 +113,162 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
             imageUrl: "assets/images/alexsandra.png",
           ),
         ];
+      case "Yoga":
+        return [
+          Exercise(
+            name: "Downward Dog",
+            description: "Form an inverted V-shape with your body",
+            sets: 3,
+            reps: 5,
+            duration: 30,
+            muscleGroups: ["Full Body", "Core", "Shoulders"],
+            imageUrl: "assets/images/emely.jpg",
+          ),
+          Exercise(
+            name: "Warrior Pose",
+            description: "Strong standing pose with arms extended",
+            sets: 3,
+            reps: 3,
+            duration: 45,
+            muscleGroups: ["Legs", "Core", "Shoulders"],
+            imageUrl: "assets/images/image1.png",
+          ),
+          Exercise(
+            name: "Tree Pose",
+            description: "Balance on one leg with hands in prayer position",
+            sets: 3,
+            reps: 4,
+            duration: 60,
+            muscleGroups: ["Balance", "Legs", "Core"],
+            imageUrl: "assets/images/image2.png",
+          ),
+          Exercise(
+            name: "Child's Pose",
+            description: "Kneeling pose for relaxation and stretching",
+            sets: 2,
+            reps: 1,
+            duration: 90,
+            muscleGroups: ["Back", "Hips", "Relaxation"],
+            imageUrl: "assets/images/image3.png",
+          ),
+        ];
+      case "Cardio":
+        return [
+          Exercise(
+            name: "Jumping Jacks",
+            description: "Jump while spreading legs and raising arms overhead",
+            sets: 4,
+            reps: 20,
+            duration: 60,
+            muscleGroups: ["Full Body", "Cardio"],
+            imageUrl: "assets/images/emily.png",
+          ),
+          Exercise(
+            name: "High Knees",
+            description: "Run in place while lifting knees high",
+            sets: 4,
+            reps: 30,
+            duration: 45,
+            muscleGroups: ["Legs", "Cardio", "Core"],
+            imageUrl: "assets/images/sule.png",
+          ),
+          Exercise(
+            name: "Mountain Climbers",
+            description: "Alternate bringing knees to chest in plank position",
+            sets: 3,
+            reps: 15,
+            duration: 30,
+            muscleGroups: ["Core", "Cardio", "Shoulders"],
+            imageUrl: "assets/images/alexsandra.png",
+          ),
+          Exercise(
+            name: "Burpees",
+            description: "Squat, kick back to plank, jump up",
+            sets: 3,
+            reps: 10,
+            duration: 45,
+            muscleGroups: ["Full Body", "Cardio"],
+            imageUrl: "assets/images/emely.jpg",
+          ),
+        ];
+      case "HIIT":
+        return [
+          Exercise(
+            name: "Sprint Intervals",
+            description: "Alternate 30 seconds sprint with 30 seconds rest",
+            sets: 8,
+            reps: 1,
+            duration: 30,
+            muscleGroups: ["Legs", "Cardio", "Full Body"],
+            imageUrl: "assets/images/image1.png",
+          ),
+          Exercise(
+            name: "Push-up Bursts",
+            description: "30 seconds of push-ups followed by rest",
+            sets: 6,
+            reps: 1,
+            duration: 30,
+            muscleGroups: ["Chest", "Shoulders", "Triceps"],
+            imageUrl: "assets/images/image2.png",
+          ),
+          Exercise(
+            name: "Jump Squats",
+            description: "Squat down and jump up explosively",
+            sets: 5,
+            reps: 10,
+            duration: 20,
+            muscleGroups: ["Legs", "Glutes", "Cardio"],
+            imageUrl: "assets/images/image3.png",
+          ),
+          Exercise(
+            name: "Plank Jacks",
+            description: "Jump feet out wide then back together in plank",
+            sets: 4,
+            reps: 15,
+            duration: 25,
+            muscleGroups: ["Core", "Cardio", "Shoulders"],
+            imageUrl: "assets/images/emily.png",
+          ),
+        ];
+      case "Strength":
+        return [
+          Exercise(
+            name: "Dumbbell Curls",
+            description: "Curl dumbbells from hips to shoulders",
+            sets: 4,
+            reps: 12,
+            duration: 45,
+            muscleGroups: ["Biceps", "Forearms"],
+            imageUrl: "assets/images/sule.png",
+          ),
+          Exercise(
+            name: "Shoulder Press",
+            description: "Press weights overhead from shoulder height",
+            sets: 4,
+            reps: 10,
+            duration: 50,
+            muscleGroups: ["Shoulders", "Triceps"],
+            imageUrl: "assets/images/alexsandra.png",
+          ),
+          Exercise(
+            name: "Lunges",
+            description: "Step forward into a lunge position",
+            sets: 3,
+            reps: 12,
+            duration: 60,
+            muscleGroups: ["Quads", "Glutes", "Hamstrings"],
+            imageUrl: "assets/images/emely.jpg",
+          ),
+          Exercise(
+            name: "Rows",
+            description: "Pull weight towards your torso",
+            sets: 4,
+            reps: 10,
+            duration: 55,
+            muscleGroups: ["Back", "Biceps"],
+            imageUrl: "assets/images/image1.png",
+          ),
+        ];
       default:
         return [];
     }

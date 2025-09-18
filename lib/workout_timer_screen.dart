@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workout_app_androweb/data_service.dart';
+import 'package:workout_app_androweb/modes.dart';
 
 class WorkoutTimerScreen extends StatefulWidget {
   const WorkoutTimerScreen({super.key});
@@ -11,25 +12,34 @@ class WorkoutTimerScreen extends StatefulWidget {
 }
 
 class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
-  int _seconds = 30; // Default 30 seconds for exercise
-  Timer? _timer;
-  bool _isRunning = false;
   final DataService _dataService = DataService();
 
   // Workout session data
   String _currentWorkoutName = "Custom Workout";
-  int _totalExercises = 1;
-  int _sessionDuration = 0; // Track total session time
+  List<Exercise> _exercises = [];
+  int _currentExerciseIndex = 0;
+  int _currentSet = 1;
+
+  // Timer states
+  int _seconds = 30;
+  Timer? _timer;
+  bool _isRunning = false;
+  bool _isRestPeriod = false;
+  int _restSeconds = 60; // Default 60 seconds rest
+
+  // Session tracking
+  int _sessionDuration = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Get arguments passed from previous screen
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    if (args != null) {
+    if (args != null && _exercises.isEmpty) {
       setState(() {
         _currentWorkoutName = args['workoutName'] ?? "Custom Workout";
-        _totalExercises = args['exerciseCount'] ?? 1;
+        _exercises = args['exercises'] ?? [];
+        _seconds = _exercises.isNotEmpty ? _exercises[0].duration : 30;
       });
     }
   }
@@ -41,15 +51,27 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     setState(() {
       _isRunning = true;
     });
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        if (_seconds > 0) {
-          _seconds--;
-          _sessionDuration++;
+        if (_isRestPeriod) {
+          // Rest period countdown
+          if (_restSeconds > 0) {
+            _restSeconds--;
+            _sessionDuration++;
+          } else {
+            // Rest period complete, start next exercise
+            _startNextExercise();
+          }
         } else {
-          _timer!.cancel();
-          _isRunning = false;
-          _completeWorkout();
+          // Exercise countdown
+          if (_seconds > 0) {
+            _seconds--;
+            _sessionDuration++;
+          } else {
+            // Exercise complete, check if more sets or exercises
+            _handleExerciseComplete();
+          }
         }
       });
     });
@@ -65,10 +87,54 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   void _resetTimer() {
     _timer?.cancel();
     setState(() {
-      _seconds = 30;
+      _seconds = _exercises.isNotEmpty ? _exercises[_currentExerciseIndex].duration : 30;
       _isRunning = false;
+      _isRestPeriod = false;
+      _restSeconds = 60;
+      _currentSet = 1;
       _sessionDuration = 0;
     });
+  }
+
+  void _handleExerciseComplete() {
+    final currentExercise = _exercises[_currentExerciseIndex];
+
+    if (_currentSet < currentExercise.sets) {
+      // More sets to do for current exercise
+      setState(() {
+        _currentSet++;
+        _isRestPeriod = true;
+        _restSeconds = 60; // 60 seconds rest between sets
+        _seconds = currentExercise.duration; // Reset for next set
+      });
+    } else if (_currentExerciseIndex < _exercises.length - 1) {
+      // Move to next exercise
+      setState(() {
+        _currentExerciseIndex++;
+        _currentSet = 1;
+        _isRestPeriod = true;
+        _restSeconds = 90; // 90 seconds rest between exercises
+        _seconds = _exercises[_currentExerciseIndex].duration;
+      });
+    } else {
+      // Workout complete!
+      _timer?.cancel();
+      _isRunning = false;
+      _completeWorkout();
+    }
+  }
+
+  void _startNextExercise() {
+    setState(() {
+      _isRestPeriod = false;
+      _isRunning = true; // Auto-start next exercise
+    });
+  }
+
+  void _skipRest() {
+    if (_isRestPeriod) {
+      _startNextExercise();
+    }
   }
 
   void _addTime(int seconds) {
@@ -82,7 +148,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     await _dataService.saveCompletedWorkout(
       _currentWorkoutName,
       _sessionDuration ~/ 60, // Convert seconds to minutes
-      _totalExercises,
+      _exercises.length,
     );
 
     // Show completion dialog

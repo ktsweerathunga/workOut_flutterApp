@@ -19,6 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Category(name: "CrossFit", imageUrl: "assets/images/emily.png"),
     Category(name: "Full Body", imageUrl: "assets/images/sule.png"),
     Category(name: "Hard Workout", imageUrl: "assets/images/alexsandra.png"),
+    Category(name: "Yoga", imageUrl: "assets/images/emely.jpg"),
+    Category(name: "Cardio", imageUrl: "assets/images/image1.png"),
+    Category(name: "HIIT", imageUrl: "assets/images/image2.png"),
+    Category(name: "Strength", imageUrl: "assets/images/image3.png"),
   ];
 
   final TextEditingController _searchController = TextEditingController();
@@ -63,6 +67,39 @@ class _HomeScreenState extends State<HomeScreen> {
       'assets/images/emely.jpg',
     ];
     return avatarImages[index % avatarImages.length];
+  }
+
+  Widget _buildCategoryTag(String categoryName) {
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 38, 27, 87),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        categoryName,
+        style: GoogleFonts.lato(
+          fontSize: 14,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  String _getCategoryInfo(String categoryName) {
+    // This is a simplified version - in a real app you'd calculate this from the exercise data
+    final categoryInfo = {
+      "CrossFit": "15 mins | 3 Exercises",
+      "Full Body": "15 mins | 3 Exercises",
+      "Hard Workout": "15 mins | 3 Exercises",
+      "Yoga": "20 mins | 4 Exercises",
+      "Cardio": "15 mins | 4 Exercises",
+      "HIIT": "10 mins | 4 Exercises",
+      "Strength": "20 mins | 4 Exercises",
+    };
+    return categoryInfo[categoryName] ?? "15 mins | 3 Exercises";
   }
 
   @override
@@ -203,30 +240,20 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text("Popular", style: GoogleFonts.lato(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold 
-                    )),
-                    Text("Hard workout", style: GoogleFonts.lato(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold 
-                    )),
-                    Text("Full body", style: GoogleFonts.lato(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold 
-                    )),
-                    Text("CrossFit", style: GoogleFonts.lato(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold 
-                    )),
-                  ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildCategoryTag("Popular"),
+                      _buildCategoryTag("CrossFit"),
+                      _buildCategoryTag("Full Body"),
+                      _buildCategoryTag("Hard Workout"),
+                      _buildCategoryTag("Yoga"),
+                      _buildCategoryTag("Cardio"),
+                      _buildCategoryTag("HIIT"),
+                      _buildCategoryTag("Strength"),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -287,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.bold 
                                 )),
                                 SizedBox(height: 5,),
-                                Text("15 mins | 5 Exercises", style: GoogleFonts.lato(
+                                Text(_getCategoryInfo(_filteredCategories[index].name), style: GoogleFonts.lato(
                                   fontSize: 12,
                                   color: Colors.white70,
                                   fontWeight: FontWeight.w400 
