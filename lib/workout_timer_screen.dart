@@ -224,6 +224,8 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentExercise = _exercises.isNotEmpty ? _exercises[_currentExerciseIndex] : null;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -247,138 +249,205 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                     icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    "Workout Timer",
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 32,
-                      color: Colors.white,
-                      letterSpacing: 1.8,
+                  Expanded(
+                    child: Text(
+                      _currentWorkoutName,
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 24,
+                        color: Colors.white,
+                        letterSpacing: 1.8,
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 50),
+
+              // Progress indicator
+              if (_exercises.isNotEmpty) ...[
+                SizedBox(height: 20),
+                LinearProgressIndicator(
+                  value: (_currentExerciseIndex * currentExercise!.sets + _currentSet - 1) /
+                         (_exercises.length * currentExercise.sets),
+                  backgroundColor: Colors.white24,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    _isRestPeriod ? Colors.orange : Color.fromARGB(255, 90, 188, 74),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Exercise ${_currentExerciseIndex + 1} of ${_exercises.length} • Set $_currentSet of ${currentExercise.sets}",
+                  style: GoogleFonts.lato(
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
+              ],
+
+              SizedBox(height: 30),
               Expanded(
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 250,
-                        height: 250,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 38, 27, 87),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            _formatTime(_seconds),
-                            style: GoogleFonts.bebasNeue(
-                              fontSize: 60,
-                              color: _seconds <= 10 ? Colors.red : Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      if (_isRestPeriod) ...[
+                        // Rest Period UI
+                        Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            shape: BoxShape.circle,
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 50),
-                      Text(
-                        _isRunning ? "Keep going!" : "Ready to start?",
-                        style: GoogleFonts.lato(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: _isRunning ? _pauseTimer : _startTimer,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 90, 188, 74),
-                              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
+                          child: Center(
                             child: Text(
-                              _isRunning ? "Pause" : "Start",
-                              style: GoogleFonts.lato(
-                                fontSize: 18,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          ElevatedButton(
-                            onPressed: _resetTimer,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                            child: Text(
-                              "Reset",
-                              style: GoogleFonts.lato(
-                                fontSize: 18,
+                              _formatTime(_restSeconds),
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: 50,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Text(
-                        "Quick Add Time:",
-                        style: GoogleFonts.lato(
-                          fontSize: 16,
-                          color: Colors.white70,
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildTimeButton(10),
-                          SizedBox(width: 10),
-                          _buildTimeButton(30),
-                          SizedBox(width: 10),
-                          _buildTimeButton(60),
+                        SizedBox(height: 30),
+                        Text(
+                          "Rest Time",
+                          style: GoogleFonts.lato(
+                            fontSize: 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Next: ${currentExercise?.name ?? 'Next Exercise'}",
+                          style: GoogleFonts.lato(
+                            fontSize: 18,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        SizedBox(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: _skipRest,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                              child: Text(
+                                "Skip Rest",
+                                style: GoogleFonts.lato(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ] else ...[
+                        // Exercise UI
+                        Container(
+                          width: 250,
+                          height: 250,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 38, 27, 87),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              _formatTime(_seconds),
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: 60,
+                                color: _seconds <= 10 ? Colors.red : Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        if (currentExercise != null) ...[
+                          Text(
+                            currentExercise.name,
+                            style: GoogleFonts.lato(
+                              fontSize: 24,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "${currentExercise.sets} sets • ${currentExercise.reps} reps",
+                            style: GoogleFonts.lato(
+                              fontSize: 16,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            currentExercise.muscleGroups.join(", "),
+                            style: GoogleFonts.lato(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 90, 188, 74),
+                            ),
+                          ),
                         ],
-                      ),
+                        SizedBox(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: _isRunning ? _pauseTimer : _startTimer,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromARGB(255, 90, 188, 74),
+                                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                              child: Text(
+                                _isRunning ? "Pause" : "Start",
+                                style: GoogleFonts.lato(
+                                  fontSize: 18,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            ElevatedButton(
+                              onPressed: _resetTimer,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                              child: Text(
+                                "Reset",
+                                style: GoogleFonts.lato(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTimeButton(int seconds) {
-    return ElevatedButton(
-      onPressed: () => _addTime(seconds),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 38, 27, 87),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      child: Text(
-        "+${seconds}s",
-        style: GoogleFonts.lato(
-          fontSize: 16,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );

@@ -400,7 +400,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                     '/timer',
                     arguments: {
                       'workoutName': widget.category.name,
-                      'exerciseCount': exercises.length,
+                      'exercises': exercises,
                     },
                   );
                 },
