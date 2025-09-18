@@ -1,7 +1,6 @@
-class category {
+class Category {
   final String name;
   final String imageUrl;
 
-  category({required this.name, required this.imageUrl });  
-  
+  Category({required this.name, required this.imageUrl});
 }

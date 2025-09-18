@@ -11,11 +11,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final List catego = [
-    category(name: "CrossFit", imageUrl: "assets/images/crossfit.png"),
-    category(name: "Full Body", imageUrl: "assets/images/fullbody.png"),
-    category(name: "Hard Workout", imageUrl: "assets/images/hardworkout.png"),
-    category(name: "Yoga", imageUrl: "assets/images/yoga.png"),
+  final List<Category> catego = [
+    Category(name: "CrossFit", imageUrl: "assets/images/emily.png"),
+    Category(name: "Full Body", imageUrl: "assets/images/sule.png"),
+    Category(name: "Hard Workout", imageUrl: "assets/images/alexsandra.png"),
   ];
 
   @override
