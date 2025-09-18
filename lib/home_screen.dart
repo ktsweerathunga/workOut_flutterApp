@@ -139,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextFormField(
+                      controller: _searchController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(Icons.search, color: Colors.white,),
@@ -196,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 250,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: catego.length,
+                  itemCount: _filteredCategories.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right:8.0, top: 20),
@@ -205,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.pushNamed(
                             context,
                             '/workout-detail',
-                            arguments: catego[index],
+                            arguments: _filteredCategories[index],
                           );
                         },
                         child: Container(
@@ -225,13 +226,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 80,
                                   decoration: BoxDecoration(  
                                     image: DecorationImage(
-                                      image: AssetImage(catego[index].imageUrl),
+                                      image: AssetImage(_filteredCategories[index].imageUrl),
                                       fit: BoxFit.cover
                                     )
                                   ),
                                 ),
                                 SizedBox(height: 10,),
-                                Text(catego[index].name, style: GoogleFonts.lato(
+                                Text(_filteredCategories[index].name, style: GoogleFonts.lato(
                                   fontSize: 20,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold 
