@@ -4,6 +4,8 @@ import 'package:workout_app_androweb/home_screen.dart';
 import 'package:workout_app_androweb/workout_detail_screen.dart';
 import 'package:workout_app_androweb/workout_timer_screen.dart';
 import 'package:workout_app_androweb/progress_screen.dart';
+import 'package:workout_app_androweb/user_profile_screen.dart';
+import 'package:workout_app_androweb/data_test_screen.dart';
 import 'package:workout_app_androweb/modes.dart';
 import 'package:workout_app_androweb/data_service.dart';
 
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/timer': (context) => const WorkoutTimerScreen(),
         '/progress': (context) => const ProgressScreen(),
+        '/profile': (context) => const UserProfileScreen(),
+        '/data-test': (context) => const DataTestScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/workout-detail') {

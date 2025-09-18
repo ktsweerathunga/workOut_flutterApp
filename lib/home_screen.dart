@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workout_app_androweb/modes.dart';
+import 'package:workout_app_androweb/data_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +11,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final DataService _dataService = DataService();
+  Map<String, dynamic>? _userProfile;
+  bool _isLoadingProfile = true;
 
   final List<Category> catego = [
     Category(name: "CrossFit", imageUrl: "assets/images/emily.png"),
@@ -25,12 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _filteredCategories = catego;
     _searchController.addListener(_filterCategories);
+    _loadUserProfile();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final profile = await _dataService.getUserProfile();
+    setState(() {
+      _userProfile = profile;
+      _isLoadingProfile = false;
+    });
   }
 
   void _filterCategories() {
@@ -40,6 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
         return category.name.toLowerCase().contains(query);
       }).toList();
     });
+  }
+
+  String _getAvatarImage(int index) {
+    final avatarImages = [
+      'assets/images/emily.png',
+      'assets/images/sule.png',
+      'assets/images/alexsandra.png',
+      'assets/images/emely.jpg',
+    ];
+    return avatarImages[index % avatarImages.length];
   }
 
   @override
@@ -75,20 +98,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         letterSpacing: 1.8
                       ),),
-                      Text("Big guy", style: GoogleFonts.bebasNeue(
-                        fontSize: 40,
-                        color: const Color.fromARGB(255, 90, 188, 74),
-                        letterSpacing: 1.8
-                      ),),
+                      Text(
+                        _isLoadingProfile
+                            ? "there"
+                            : (_userProfile?['name']?.split(' ').first ?? "Big guy"),
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: 40,
+                          color: const Color.fromARGB(255, 90, 188, 74),
+                          letterSpacing: 1.8
+                        ),
+                      ),
                     ],
                   ),
-                  Container(
-                    height: 42,
-                    width: 42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: Color.fromARGB(255, 90, 188, 74), width: 3),
-                      image: DecorationImage(image: AssetImage("assets/images/emely.jpg"), fit: BoxFit.cover)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    child: Container(
+                      height: 42,
+                      width: 42,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(color: Color.fromARGB(255, 90, 188, 74), width: 3),
+                        image: DecorationImage(
+                          image: _isLoadingProfile || _userProfile == null
+                              ? AssetImage("assets/images/emely.jpg")
+                              : AssetImage(_getAvatarImage(_userProfile!['avatar'] ?? 0)),
+                          fit: BoxFit.cover
+                        )
+                      ),
                     ),
                   )
                 ],
