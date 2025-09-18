@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workout_app_androweb/modes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +10,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final List catego = [
+    category(name: "CrossFit", imageUrl: "assets/images/crossfit.png"),
+    category(name: "Full Body", imageUrl: "assets/images/fullbody.png"),
+    category(name: "Hard Workout", imageUrl: "assets/images/hardworkout.png"),
+    category(name: "Yoga", imageUrl: "assets/images/yoga.png"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,43 +66,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 200,
                 child: Icon(Icons.play_circle_sharp , size: 80, color: Color.fromARGB(255, 90, 188, 74),),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text("Find", style: GoogleFonts.lato(
-                        fontSize: 25,
-                        color: Colors.white,
-                        letterSpacing: 1.8,
-                        fontWeight: FontWeight.bold,
-                      ),),
-                      Text("Your Workout", style: GoogleFonts.lato(
-                        fontSize: 25,
-                        color: const Color.fromARGB(255, 90, 188, 74),
-                        letterSpacing: 1.8,
-                        fontWeight: FontWeight.bold,
-                      ),),
-                    ],
-                  ),
-                  Icon(
-                    Icons.filter_alt_outlined,
-                    color: const Color.fromARGB(255, 90, 188, 74),
-                    size: 40,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text("Find", style: GoogleFonts.lato(
+                          fontSize: 25,
+                          color: Colors.white,
+                          letterSpacing: 1.8,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                        Text("Your Workout", style: GoogleFonts.lato(
+                          fontSize: 25,
+                          color: const Color.fromARGB(255, 90, 188, 74),
+                          letterSpacing: 1.8,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                      ],
+                    ),
+                    Icon(
+                      Icons.filter_alt_outlined,
+                      color: const Color.fromARGB(255, 90, 188, 74),
+                      size: 40,
+                    ),
+                  ],
+                ),
               ),
+              SizedBox(height: 35),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Container(
-                  height: 345,
-                  width: 50,
+                  width: 345,
+                  height: 50,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 90, 188, 74),
-                    borderRadius: BorderRadius.circular(20)
+                    borderRadius: BorderRadius.circular(30)
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -106,28 +119,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text("Popular", style: GoogleFonts.lato(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.bold 
                     )),
                     Text("Hard workout", style: GoogleFonts.lato(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.bold 
                     )),
                     Text("Full body", style: GoogleFonts.lato(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.bold 
                     )),
                     Text("CrossFit", style: GoogleFonts.lato(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.bold 
                     )),
@@ -146,6 +160,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              Container(
+                width: double.infinity,
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: catego.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right:8.0, top: 20),
+                      child: Container(
+                        width: 200,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 38, 27, 87),
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(  
+                                  image: DecorationImage(
+                                    image: AssetImage(catego[index].imageUrl),
+                                    fit: BoxFit.cover
+                                  )
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Text(catego[index].name, style: GoogleFonts.lato(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold 
+                              )),
+                              SizedBox(height: 5,),
+                              Text("15 mins | 5 Exercises", style: GoogleFonts.lato(
+                                fontSize: 12,
+                                color: Colors.white70,
+                                fontWeight: FontWeight.w400 
+                              )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+              )
             ],
           ),
         ),
