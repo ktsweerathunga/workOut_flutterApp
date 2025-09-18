@@ -175,41 +175,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right:8.0, top: 20),
-                      child: Container(
-                        width: 200,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 38, 27, 87),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                decoration: BoxDecoration(  
-                                  image: DecorationImage(
-                                    image: AssetImage(catego[index].imageUrl),
-                                    fit: BoxFit.cover
-                                  )
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/workout-detail',
+                            arguments: catego[index],
+                          );
+                        },
+                        child: Container(
+                          width: 200,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 38, 27, 87),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(  
+                                    image: DecorationImage(
+                                      image: AssetImage(catego[index].imageUrl),
+                                      fit: BoxFit.cover
+                                    )
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10,),
-                              Text(catego[index].name, style: GoogleFonts.lato(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold 
-                              )),
-                              SizedBox(height: 5,),
-                              Text("15 mins | 5 Exercises", style: GoogleFonts.lato(
-                                fontSize: 12,
-                                color: Colors.white70,
-                                fontWeight: FontWeight.w400 
-                              )),
-                            ],
+                                SizedBox(height: 10,),
+                                Text(catego[index].name, style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold 
+                                )),
+                                SizedBox(height: 5,),
+                                Text("15 mins | 5 Exercises", style: GoogleFonts.lato(
+                                  fontSize: 12,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w400 
+                                )),
+                              ],
+                            ),
                           ),
                         ),
                       ),
