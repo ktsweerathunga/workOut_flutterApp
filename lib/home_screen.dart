@@ -123,6 +123,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: const Color.fromARGB(255, 90, 188, 74),
                       size: 40,
                     ),
+                    SizedBox(width: 15),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/progress');
+                      },
+                      child: Icon(
+                        Icons.bar_chart,
+                        color: const Color.fromARGB(255, 90, 188, 74),
+                        size: 40,
+                      ),
+                    ),
                   ],
                 ),
               ),

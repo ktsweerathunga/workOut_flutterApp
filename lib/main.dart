@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
         '/home': (context) => const HomeScreen(),
         '/timer': (context) => const WorkoutTimerScreen(),
+        '/progress': (context) => const ProgressScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/workout-detail') {
